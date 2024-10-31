@@ -9,7 +9,7 @@ const JobDetail = () => {
     useEffect(() => {
         const fetchJob = async () => {
             const response = await
-            axios.get(`/api/jobs/${id}`);
+            axios.get(`http://localhost:5000/api/jobs/${id}`);
             setJob(response.data);
         };
         fetchJob();

@@ -1,53 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// Dashboard.js
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-    const [applications, setApplications] = useState([]);
-    const [jobs, setJobs] = useState([]);
-    
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-
-            try {
-                const config = { headers: { Authorization:
-                    `Bearer ${token}`}};
-
-                    const applicationsRes = await
-                    axios.get('/api/applications', config);
-                    setApplications(applicationsRes.data);
-
-                    const jobsRes = await axios.get('/api/jobs', config);
-                    setJobs(jobsRes.data.filter(job => job.status === 'active'));
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-        fetchUserData();
-    }, []);
-
-    return (
-        <div>
-            <h1>Dashboard</h1>
-            <section>
-                <h2>My Applications</h2>
-                <ul>
-                    {applications.map(app => (
-                        <li key={app._id}>{app.jobId.title} - {app.status}</li>
-                    ))}
-                </ul>
-            </section>
-            <section>
-                <h2>Saved Jobs</h2>
-                <ul>
-                    {jobs.map(job => (
-                        <li key={job._id}>{job.title}</li>
-                    ))}
-                </ul>
-            </section>
+  return (
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div className="container">
+          <Link className="navbar-brand" to="/">Job Listings</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/">Job Listings</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/dashboard">Dashboard</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">Register</Link>
+              </li>
+            </ul>
+          </div>
         </div>
-    );
+      </nav>
+      <h1>Dashboard</h1>
+      {/* Dashboard content goes here */}
+    </div>
+  );
 };
 
 export default Dashboard;
